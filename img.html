@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="never" name="referrer">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>...</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #f7f7f7, #eaeaea);
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100% - 100px);
+        }
+
+        .container img {
+            max-width: 90%;
+            max-height: 80%;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .sx button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            position: fixed;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .sx button:hover {
+            background-color: #3e8e41;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .sx button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img id="bz" src="https://hj.xn--btvqbw8c607l.com/api.php?act=getImgRand">
+    </div>
+    <div class="sx">
+        <button onclick="refreshImage()" id="refreshBtn">再来张图片</button>
+    </div>
+
+    <script src="https://lib.baomitu.com/jquery/2.1.4/jquery.min.js" charset="utf-8" type="text/javascript"></script>
+    <script>
+        var canRefresh = true;
+
+        function refreshImage() {
+            if (!canRefresh) return;
+
+            canRefresh = false;
+            var imgElement = document.getElementById('bz');
+            var btn = document.getElementById('refreshBtn');
+
+            btn.textContent = '图片加载中';
+            btn.disabled = true;
+
+            imgElement.src = 'https://hj.xn--btvqbw8c607l.com/api.php?act=getImgRand&' + Math.random();
+
+            imgElement.onload = function () {
+                btn.textContent = '再来张图片';
+                btn.disabled = false;
+                canRefresh = true;
+            };
+            imgElement.onerror = function () {
+                btn.textContent = '再来张图片';
+                btn.disabled = false;
+                canRefresh = true;
+            };
+        }
+    </script>
+</body>
+
+</html>
